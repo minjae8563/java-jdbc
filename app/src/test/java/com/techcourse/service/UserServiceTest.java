@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class AppUserServiceTest {
+class UserServiceTest {
 
     private JdbcTemplate jdbcTemplate;
     private UserDao userDao;
@@ -32,7 +32,7 @@ class AppUserServiceTest {
     @Test
     void testChangePassword() {
         final var userHistoryDao = new UserHistoryDao(DataSourceConfig.getInstance());
-        final var appUserService = new AppUserService(userDao, userHistoryDao);
+        final var appUserService = new UserService(userDao, userHistoryDao);
         final var transactionManager = new TransactionManager(DataSourceConfig.getInstance());
         final var userService = new TxUserService(appUserService, transactionManager);
 
@@ -49,7 +49,7 @@ class AppUserServiceTest {
     void testTransactionRollback() {
         // 트랜잭션 롤백 테스트를 위해 mock으로 교체
         final var userHistoryDao = new MockUserHistoryDao(DataSourceConfig.getInstance());
-        final var appUserService = new AppUserService(userDao, userHistoryDao);
+        final var appUserService = new UserService(userDao, userHistoryDao);
         final var transactionManager = new TransactionManager(DataSourceConfig.getInstance());
         final var userService = new TxUserService(appUserService, transactionManager);
 
